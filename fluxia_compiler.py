@@ -1,5 +1,3 @@
-# fluxia_compiler.py
-
 from typing import List, Dict, Tuple
 from fluxia_parser import (
     Program, FunctionDef, VarDecl, Assign, If, While, Return,
@@ -116,8 +114,31 @@ class Compiler:
                 raise CompilerError(f"Unknown binary operator {node.op}")
             self.current_code.append((op_map[node.op],))
         elif isinstance(node, Call):
-            for arg in node.args:
-                self.compile_expr(arg)
-            self.current_code.append(("CALL", node.func, len(node.args)))
+            if node.func == "new_stack":
+                self.current_code.append(("NEW_STACK",))
+            elif node.func == "push_stack":
+                self.compile_expr(node.args[0])
+                self.current_code.append(("PUSH_STACK",))
+            elif node.func == "pop_stack":
+                self.current_code.append(("POP_STACK",))
+            elif node.func == "new_queue":
+                self.current_code.append(("NEW_QUEUE",))
+            elif node.func == "enqueue":
+                self.compile_expr(node.args[0])
+                self.current_code.append(("ENQUEUE",))
+            elif node.func == "dequeue":
+                self.current_code.append(("DEQUEUE",))
+            elif node.func == "new_abr":
+                self.current_code.append(("NEW_ABR",))
+            elif node.func == "insert_abr":
+                self.compile_expr(node.args[0])
+                self.current_code.append(("INSERT_ABR",))
+            elif node.func == "search_abr":
+                self.compile_expr(node.args[0])
+                self.current_code.append(("SEARCH_ABR",))
+            else:
+                for arg in node.args:
+                    self.compile_expr(arg)
+                self.current_code.append(("CALL", node.func, len(node.args)))
         else:
             raise CompilerError(f"Unknown expression node {type(node).__name__}")
