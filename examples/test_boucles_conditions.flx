@@ -1,0 +1,24 @@
+// Test des boucles et conditions en Fluxia
+
+// Boucle while
+var i = 0
+while (i < 5) {
+    print("i =", i)
+    i = i + 1
+}
+
+// Condition if/else
+if (i == 5) {
+    print("i vaut 5")
+} else {
+    print("i ne vaut pas 5")
+}
+
+// Condition imbriquée
+var x = 10
+if (x > 5) {
+    print("x est supérieur à 5")
+    if (x == 10) {
+        print("x vaut 10")
+    }
+}
