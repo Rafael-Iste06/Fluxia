@@ -1,0 +1,17 @@
+// Test de la structure File (Queue) en Fluxia
+
+// Création d'une file
+file = new_queue()
+
+// Enfiler des éléments
+enqueue(file, 1)
+enqueue(file, 2)
+enqueue(file, 3)
+
+// Afficher et défiler
+print("Défiler :", dequeue(file))  // Affiche 1
+print("Défiler :", dequeue(file))  // Affiche 2
+print("Défiler :", dequeue(file))  // Affiche 3
+
+// Tester le comportement avec une file vide
+// print("Défiler :", dequeue(file))  // Devrait lever une erreur
