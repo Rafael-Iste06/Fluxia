@@ -1,6 +1,5 @@
-# fluxia_vm.py
-
 from typing import Any, Dict, List, Tuple, Callable
+from structures import Pile, File, ABR
 
 class VMError(Exception):
     pass
@@ -23,6 +22,15 @@ class FluxiaVM:
 
     def _setup_builtins(self):
         self.builtins["print"] = self._builtin_print
+        self.builtins["new_stack"] = lambda: Pile()
+        self.builtins["push_stack"] = lambda stack, val: stack.empiler(val)
+        self.builtins["pop_stack"] = lambda stack: stack.depiler()
+        self.builtins["new_queue"] = lambda: File()
+        self.builtins["enqueue"] = lambda queue, val: queue.enfiler(val)
+        self.builtins["dequeue"] = lambda queue: queue.defiler()
+        self.builtins["new_abr"] = lambda: ABR()
+        self.builtins["insert_abr"] = lambda abr, val: abr.inserer(val)
+        self.builtins["search_abr"] = lambda abr, val: abr.rechercher(val)
         if "gui" in self.uses:
             try:
                 from fluxia_gui import setup_gui_builtins
@@ -152,6 +160,42 @@ class FluxiaVM:
                 result = stack.pop() if stack else None
                 frame.ip = ip
                 return result
+
+            # Instructions pour les structures
+            elif op == "NEW_STACK":
+                stack.append(Pile())
+            elif op == "PUSH_STACK":
+                val = stack.pop()
+                stack_obj = stack.pop()
+                stack_obj.empiler(val)
+                stack.append(stack_obj)
+            elif op == "POP_STACK":
+                stack_obj = stack.pop()
+                stack.append(stack_obj.depiler())
+                stack.append(stack_obj)
+            elif op == "NEW_QUEUE":
+                stack.append(File())
+            elif op == "ENQUEUE":
+                val = stack.pop()
+                queue_obj = stack.pop()
+                queue_obj.enfiler(val)
+                stack.append(queue_obj)
+            elif op == "DEQUEUE":
+                queue_obj = stack.pop()
+                stack.append(queue_obj.defiler())
+                stack.append(queue_obj)
+            elif op == "NEW_ABR":
+                stack.append(ABR())
+            elif op == "INSERT_ABR":
+                val = stack.pop()
+                abr_obj = stack.pop()
+                abr_obj.inserer(val)
+                stack.append(abr_obj)
+            elif op == "SEARCH_ABR":
+                val = stack.pop()
+                abr_obj = stack.pop()
+                stack.append(abr_obj.rechercher(val))
+                stack.append(abr_obj)
 
             else:
                 raise VMError(f"Unknown opcode {op}")
