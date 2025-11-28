@@ -1,0 +1,17 @@
+// Test de la structure Pile (Stack) en Fluxia
+
+// Création d'une pile
+pile = new_stack()
+
+// Empiler des éléments
+push_stack(pile, 1)
+push_stack(pile, 2)
+push_stack(pile, 3)
+
+// Afficher et dépiler
+print("Dépiler :", pop_stack(pile))  // Affiche 3
+print("Dépiler :", pop_stack(pile))  // Affiche 2
+print("Dépiler :", pop_stack(pile))  // Affiche 1
+
+// Tester le comportement avec une pile vide
+// print("Dépiler :", pop_stack(pile))  // Devrait lever une erreur
