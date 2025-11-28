@@ -1,0 +1,20 @@
+// Test de la structure ABR (Arbre Binaire de Recherche) en Fluxia
+
+// Création d'un ABR
+abr = new_abr()
+
+// Insérer des valeurs
+insert_abr(abr, 5)
+insert_abr(abr, 3)
+insert_abr(abr, 7)
+insert_abr(abr, 2)
+insert_abr(abr, 4)
+
+// Rechercher des valeurs
+print("Recherche de 3 :", search_abr(abr, 3))  // Affiche True
+print("Recherche de 6 :", search_abr(abr, 6))  // Affiche False
+
+// Tester la suppression (si implémentée)
+// print("Suppression de 3")
+// remove_abr(abr, 3)
+// print("Recherche de 3 après suppression :", search_abr(abr, 3))  // Affiche False
